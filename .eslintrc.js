@@ -29,6 +29,10 @@ module.exports = {
       'js': 'never',
       'vue': 'never'
     }],
+
+    'prefer-arrow-callback': 'off',
+    'no-console': 'off',
+
     // allow optionalDependencies
     'import/no-extraneous-dependencies': ['error', {
       'optionalDependencies': ['test/unit/index.js']
