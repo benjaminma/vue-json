@@ -1,28 +1,27 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <hello></hello>
+    <json-csv></json-csv>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello';
+import 'vue-material/dist/vue-material.css';
+import JsonCsv from './components/JsonCsv';
 
 export default {
   name: 'app',
   components: {
-    Hello,
+    JsonCsv,
   },
 };
 </script>
 
-<style>
+<style lang="scss">
+$font-mono: 'Monaco', Courier, monospace;
+
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: $font-mono;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
