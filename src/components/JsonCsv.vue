@@ -26,6 +26,7 @@
 
 <script>
 import _ from 'lodash';
+import saveFile from '../lib/saveFile';
 
 export default {
   name: 'jsoncsv',
@@ -117,7 +118,9 @@ export default {
      * Save output to disk as text/csv
      */
     handleDownloadOutput: function handleDownloadOutput() {
-      console.log('TODO: download...');
+      if (this.output) {
+        saveFile(this.output, 'output.csv');
+      }
     },
   },
 };
