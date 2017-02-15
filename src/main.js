@@ -6,6 +6,13 @@ import App from './App';
 
 Vue.use(VueMaterial);
 
+// Vue.material.registerTheme('default', {
+//   primary: 'pink',
+//   accent: 'pink',
+//   warn: 'red',
+//   background: 'grey',
+// });
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
