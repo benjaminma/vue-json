@@ -111,7 +111,6 @@ const getCsvMeta = (arr, opts) => {
  * Wrap and escape value for CSV output
  */
 const escapeValue = (val) => {
-  console.log(`val=${val}`);
   let escaped;
   if (_.isString(val)) {
     escaped = val;
