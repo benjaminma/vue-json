@@ -85,7 +85,6 @@ export default {
      * Dismiss error snackbar and clear message
      */
     clearError: function clearError() {
-      console.log('hi');
       this.$refs.snackbar.close();
       this.error = '';
     },
