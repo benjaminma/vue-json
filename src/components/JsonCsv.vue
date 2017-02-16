@@ -1,24 +1,27 @@
 <template>
   <md-layout class="json-csv" md-column-xsmall>
 
+    <!-- JSON Input -->
     <md-layout class="panel input" md-column md-flex-xsmall md-flex-small="50" md-flex>
-      <h3>JSON</h3>
+      <h3 class="no-sel">JSON</h3>
       <textarea ref="input" class="text" v-model="input" v-on:keyup="handleParseInput" v-on:paste="handleParseInput" autofocus="true"></textarea>
       <md-layout class="controls" md-column>
         <md-button class="md-raised md-primary" v-on:click.native="handlePrettyJson" v-show="input && !error && json">Pretty JSON</md-button>
       </md-layout>
     </md-layout>
 
-    <md-layout class="panel output" md-column md-flex-xsmall md-flex-small="50" md-flex>
-      <h3>CSV</h3>
+    <!-- CSV Output -->
+    <md-layout class="panel output" md-column md-flex-xsmall md-flex-small="x" md-flex>
+      <h3 class="no-sel">CSV</h3>
       <textarea ref="output" class="text" v-model="output"></textarea>
       <md-layout class="controls" md-column>
         <md-button class="md-raised md-accent" v-on:click.native="handleDownloadOutput" v-show="output">Download CSV</md-button>
       </md-layout>
     </md-layout>
 
-    <md-snackbar :md-position="'bottom left'" ref="snackbar" :md-duration="9000">
-      <span>{{ error }}</span>
+    <!-- Errors -->
+    <md-snackbar ref="snackbar" class="no-sel" :md-position="'bottom left'" :md-duration="999999">
+      <span v-on:mouseover="clearError()">{{ error }}</span>
     </md-snackbar>
 
   </md-layout>
@@ -27,12 +30,14 @@
 <script>
 import _ from 'lodash';
 import saveFile from '../lib/saveFile';
+import csv from '../lib/csvFromObject';
 
 export default {
   name: 'jsoncsv',
   data() {
     return {
       json: null,
+      pretty: true,
       input: '',
       output: '',
       error: '',
@@ -45,6 +50,7 @@ export default {
      */
     cleanupData: function cleanupData() {
       this.json = null;
+      this.pretty = true;
       this.output = '';
       if (this.error) {
         this.clearError();
@@ -52,19 +58,20 @@ export default {
     },
 
     /**
-     * Generate CSV string from parsed input (obj) and then output to textarea
-     * @param  {Object|Array} obj
+     * Generate CSV string from parsed input (data) and then output to textarea
+     *
+     * @param {Object|Array} data
      */
-    outputCsv: function outputCsv(obj) {
-      if (obj) {
-        console.log('TODO: output as csv...');
-        this.output = `TODO: output as csv... ${JSON.stringify(obj)}`;
+    outputCsv: function outputCsv(data) {
+      if (data) {
+        this.output = csv.csvFromObject(data);
         this.$refs.output.scrollTop = 0;
       }
     },
 
     /**
      * Display error snackbar with message (msg)
+     *
      * @param {string} msg
      */
     showError: function showError(msg) {
@@ -78,6 +85,7 @@ export default {
      * Dismiss error snackbar and clear message
      */
     clearError: function clearError() {
+      console.log('hi');
       this.$refs.snackbar.close();
       this.error = '';
     },
@@ -105,11 +113,13 @@ export default {
     }, 300),
 
     /**
-     * Reformat input/json with whitespace, indentions
+     * Toggle reformat input/json with whitespace, indentions
      */
     handlePrettyJson: function handlePrettyJson() {
       if (this.json && !this.error) {
-        this.input = JSON.stringify(this.json, null, 2);
+        const space = (this.pretty) ? 2 : 0;
+        this.pretty = !this.pretty;
+        this.input = JSON.stringify(this.json, null, space);
         this.$refs.input.scrollTop = 0;
       }
     },
@@ -177,5 +187,9 @@ h3 {
   position: absolute;
   right: 0;
   bottom: 0;
+}
+
+.no-sel {
+  user-select: none;
 }
 </style>
