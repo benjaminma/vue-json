@@ -152,18 +152,14 @@ const csvFromObject = (data, options) => {
   // Default options
   const opts = options || {};
   opts.includeHeader = opts.includeHeader || true;
-  opts.fieldDelim = opts.fieldDelim || ',';
-  opts.nestedDelim = opts.nestedDelim || '.';
-  // opts.fieldDelim = opts.fieldDelim || '\t';
-  // opts.nestedDelim = opts.nestedDelim || '__';
+  opts.fieldDelim = opts.fieldDelim || '\t';
+  opts.nestedDelim = opts.nestedDelim || '__';
   opts.emptyValue = opts.emptyValue || null;
 
   if (canConvert(data)) {
     const arr = toArray(data);
     const out = [];
 
-    // out.push(`length=${arr.length}`);
-    // out.push(`sep=${opts.fieldDelim}`);
     const meta = getCsvMeta(arr, opts);
     if (opts.includeHeader) {
       out.push(_.map(meta.fields, (f => escapeValue(f))).join(opts.fieldDelim));

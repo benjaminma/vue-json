@@ -35,11 +35,15 @@ import csv from '../lib/csvFromObject';
 export default {
   name: 'jsoncsv',
   data() {
+    const input = '[{"id":1,"data":{"animal":"cat"}},{"id":2,"data":{"animal":"dog"}}]';
+    const json = JSON.parse(input);
+    const output = csv.csvFromObject(json);
+
     return {
-      json: null,
+      json,
       pretty: true,
-      input: '',
-      output: '',
+      input,
+      output,
       error: '',
     };
   },
